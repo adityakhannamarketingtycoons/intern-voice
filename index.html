@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Intern Voice · Marketing Tycoons</title>
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+
+  :root {
+    --navy: #1f2a44; --navy-2: #2b3a5e; --coral: #ff6b4a; --coral-2: #ff8a65;
+    --bg: #f3f4f8; --card: #fff; --ink: #1f2937; --muted: #6b7280; --line: #e5e7eb;
+    --low: #2e7d32; --low-bg: #e8f5e9; --med: #e65100; --med-bg: #fff3e0; --high: #c62828; --high-bg: #ffebee;
+    --radius: 14px;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: 'Plus Jakarta Sans', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    background: var(--bg); color: var(--ink); font-size: 15px; line-height: 1.5; }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 0 18px; }
+  .wrap.wide { max-width: 1080px; }
+  .hero { background: linear-gradient(135deg, var(--navy), var(--navy-2)); color: #fff; padding: 34px 0 70px; }
+  .hero.slim { padding: 22px 0 56px; }
+  .brand { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--coral-2); font-weight: 700; }
+  .hero h1 { margin: 6px 0 6px; font-size: 32px; font-weight: 800; letter-spacing: -0.5px; }
+  .hero p { margin: 0; color: #cfd6e6; max-width: 560px; }
+  main.wrap { margin-top: -46px; padding-bottom: 40px; }
+  .card { background: var(--card); border-radius: var(--radius); box-shadow: 0 6px 24px rgba(31, 42, 68, .08); padding: 24px; }
+  .tabs { display: flex; gap: 6px; margin-bottom: 12px; }
+  .tab { border: 0; background: rgba(255,255,255,.14); color: #fff; padding: 9px 16px; border-radius: 10px;
+    font: inherit; font-weight: 600; cursor: pointer; }
+  .tab.active { background: #fff; color: var(--navy); }
+  label { display: block; font-weight: 600; font-size: 14px; margin-bottom: 14px; }
+  label small, .hint { font-weight: 400; color: var(--muted); }
+  input, select, textarea { display: block; width: 100%; margin-top: 6px; padding: 11px 12px; border: 1.5px solid var(--line);
+    border-radius: 10px; font: inherit; color: var(--ink); background: #fff; transition: border-color .15s; }
+  input:focus, select:focus, textarea:focus { outline: none; border-color: var(--coral); }
+  textarea { resize: vertical; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 14px; }
+  fieldset.sev { border: 0; padding: 0; margin: 0 0 14px; }
+  fieldset.sev legend { font-weight: 600; font-size: 14px; margin-bottom: 6px; padding: 0; }
+  .sev-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .sev-opt { margin: 0; cursor: pointer; position: relative; }
+  .sev-opt input { position: absolute; top: 0; left: 0; width: 1px; height: 1px; margin: 0; opacity: 0; pointer-events: none; }
+  .sev-opt span { display: block; border: 1.5px solid var(--line); border-radius: 12px; padding: 11px 12px; height: 100%; transition: all .15s; }
+  .sev-opt b { display: flex; align-items: center; gap: 7px; }
+  .sev-opt b::before { content: ''; width: 9px; height: 9px; border-radius: 50%; background: currentColor; }
+  .sev-opt small { display: block; font-weight: 400; color: var(--muted); font-size: 12.5px; margin-top: 2px; }
+  .sev-opt.low b { color: var(--low); } .sev-opt.medium b { color: var(--med); } .sev-opt.high b { color: var(--high); }
+  .sev-opt.low input:checked + span { border-color: var(--low); background: var(--low-bg); }
+  .sev-opt.medium input:checked + span { border-color: var(--med); background: var(--med-bg); }
+  .sev-opt.high input:checked + span { border-color: var(--high); background: var(--high-bg); }
+  .sev-opt input:focus-visible + span { outline: 2px solid var(--coral); outline-offset: 2px; }
+  label.check { display: flex; align-items: center; gap: 10px; font-weight: 600; background: #f6f7fb; padding: 12px 14px; border-radius: 10px; }
+  label.check input { width: 18px; height: 18px; margin: 0; accent-color: var(--coral); flex: none; }
+  .btn { border: 0; background: var(--coral); color: #fff; font: inherit; font-weight: 700; padding: 12px 22px;
+    border-radius: 10px; cursor: pointer; transition: background .15s, transform .05s; }
+  .btn:hover { background: #f4552f; } .btn:active { transform: translateY(1px); }
+  .btn:disabled { opacity: .6; cursor: wait; }
+  .btn.ghost { background: transparent; color: var(--navy); border: 1.5px solid var(--line); }
+  .btn.ghost:hover { background: #f6f7fb; }
+  .btn.small { padding: 8px 14px; font-size: 14px; }
+  .error { color: var(--high); background: var(--high-bg); padding: 10px 12px; border-radius: 10px; font-size: 14px; }
+  .ok { color: var(--low); background: var(--low-bg); padding: 10px 12px; border-radius: 10px; font-size: 14px; }
+  .done { text-align: center; padding: 18px 0 6px; }
+  .done .tid { display: inline-block; font-size: 28px; font-weight: 800; letter-spacing: 1px; color: var(--navy);
+    background: #f6f7fb; border: 2px dashed var(--coral); border-radius: 12px; padding: 8px 20px; margin: 10px 0; }
+  .pill { display: inline-block; font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 999px; white-space: nowrap; }
+  .pill.Low { color: var(--low); background: var(--low-bg); }
+  .pill.Medium { color: var(--med); background: var(--med-bg); }
+  .pill.High { color: var(--high); background: var(--high-bg); }
+  .pill.Open { color: #1d4ed8; background: #e0ecff; }
+  .pill.In-Progress { color: #7c3aed; background: #efe7ff; }
+  .pill.Resolved { color: #047857; background: #d1fae5; }
+  .pill.dept { color: var(--navy); background: #eef0f6; }
+  .status-box { margin-top: 16px; border: 1.5px solid var(--line); border-radius: 12px; padding: 16px; }
+  .status-box h3 { margin: 6px 0 10px; font-size: 17px; }
+  .reply { white-space: pre-wrap; background: #f6f7fb; border-radius: 10px; padding: 12px 14px; margin-top: 8px; }
+  .meta { color: var(--muted); font-size: 13px; }
+  .foot { text-align: center; color: var(--muted); font-size: 13px; margin-top: 20px; }
+  .foot a { color: var(--navy); font-weight: 600; }
+  .row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .spacer { flex: 1; }
+  [hidden] { display: none !important; }
+  @media (max-width: 620px) {
+    .grid2, .sev-row { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 26px; }
+    .card { padding: 18px; }
+  }
+
+
+    .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 14px; }
+    .stat { background: var(--card); border-radius: 12px; padding: 14px 16px; box-shadow: 0 6px 24px rgba(31,42,68,.08); }
+    .stat .n { font-size: 26px; font-weight: 800; color: var(--navy); line-height: 1.1; }
+    .stat .l { font-size: 13px; color: var(--muted); font-weight: 600; }
+    .stat.alert .n { color: var(--high); }
+    .filters { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+    .filters select, .filters input { width: auto; margin: 0; padding: 9px 11px; font-size: 14px; }
+    .filters input { flex: 1; min-width: 180px; }
+    .tk { border: 1.5px solid var(--line); border-left-width: 5px; border-radius: 12px; margin-bottom: 10px; background: #fff; }
+    .tk.High { border-left-color: var(--high); } .tk.Medium { border-left-color: var(--med); } .tk.Low { border-left-color: var(--low); }
+    .tk-head { display: flex; align-items: center; gap: 10px; padding: 12px 14px; cursor: pointer; flex-wrap: wrap; }
+    .tk-head:hover { background: #fafbfd; }
+    .tk-id { font-weight: 800; color: var(--navy); font-size: 14px; }
+    .tk-sub { flex: 1; font-weight: 600; min-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .tk-body { border-top: 1px solid var(--line); padding: 16px; }
+    .tk-desc { white-space: pre-wrap; background: #f6f7fb; border-radius: 10px; padding: 12px 14px; margin: 8px 0 16px; }
+    .tk-form { display: grid; grid-template-columns: 200px 1fr; gap: 0 14px; }
+    .empty { text-align: center; color: var(--muted); padding: 30px 0; }
+    .userbox { color: #cfd6e6; font-size: 14px; text-align: right; }
+    .userbox b { color: #fff; }
+    .hero .btn.ghost { color: #fff; border-color: rgba(255,255,255,.3); }
+    .hero .btn.ghost:hover { background: rgba(255,255,255,.1); }
+    @media (max-width: 720px) { .stats { grid-template-columns: repeat(2, 1fr); } .tk-form { grid-template-columns: 1fr; } }
+  
+    .toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); background: var(--navy); color: #fff;
+      padding: 11px 18px; border-radius: 10px; font-weight: 600; font-size: 14px; box-shadow: 0 8px 24px rgba(0,0,0,.2); z-index: 20; max-width: 90vw; }
+  </style>
+</head>
+<body>
+
+<!-- ======================= INTERN VIEW ======================= -->
+<div id="internView">
+  <header class="hero">
+    <div class="wrap">
+      <div class="brand">Marketing Tycoons</div>
+      <h1>Intern Voice</h1>
+      <p>Raise a grievance, report an issue or share feedback. It goes straight to the head of the department you choose.</p>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="tabs">
+      <button class="tab active" data-tab="submit" type="button">Submit a ticket</button>
+      <button class="tab" data-tab="track" type="button">Track a ticket</button>
+    </div>
+
+    <section id="submit" class="card">
+      <form id="f" novalidate>
+        <div class="grid2">
+          <label>Send to department
+            <select name="department">
+              <option value="">Choose…</option>
+              <option>Sales</option>
+              <option>Finance</option>
+              <option>Tech Team</option>
+              <option>Operations</option>
+            </select>
+          </label>
+          <label>Type
+            <select name="category">
+              <option value="">Choose…</option>
+              <option>Grievance</option>
+              <option>Issue</option>
+              <option>Feedback</option>
+            </select>
+          </label>
+        </div>
+
+        <fieldset class="sev">
+          <legend>How serious is it?</legend>
+          <div class="sev-row">
+            <label class="sev-opt low"><input type="radio" name="severity" value="Low">
+              <span><b>Low</b><small>A suggestion or minor concern</small></span></label>
+            <label class="sev-opt medium"><input type="radio" name="severity" value="Medium">
+              <span><b>Medium</b><small>Affecting my work, needs attention soon</small></span></label>
+            <label class="sev-opt high"><input type="radio" name="severity" value="High">
+              <span><b>High</b><small>Serious or urgent, needs action now</small></span></label>
+          </div>
+        </fieldset>
+
+        <label>Subject
+          <input name="subject" maxlength="150" placeholder="A one-line summary">
+        </label>
+        <label>Details
+          <textarea name="description" rows="6" maxlength="5000" placeholder="What happened, when, and what would help?"></textarea>
+        </label>
+
+        <label class="check"><input type="checkbox" name="anonymous" id="anon">
+          <span>Submit anonymously <small>· your name and email won't be recorded</small></span></label>
+
+        <div id="who" class="grid2">
+          <label>Your name
+            <input name="name" maxlength="100" autocomplete="name">
+          </label>
+          <label>Your email <small>(optional, for updates)</small>
+            <input name="email" type="email" maxlength="150" autocomplete="email">
+          </label>
+        </div>
+
+        <p id="err" class="error" hidden></p>
+        <div class="row">
+          <button class="btn" id="sendBtn" type="submit">Submit ticket</button>
+          <span class="hint" id="anonHint" hidden>Save your ticket ID after submitting. It's the only way to check replies.</span>
+        </div>
+      </form>
+
+      <div id="done" class="done" hidden>
+        <h2 style="margin:0">Ticket submitted</h2>
+        <p class="meta" id="doneMsg"></p>
+        <div class="tid" id="doneId"></div>
+        <p class="meta">Keep this ID to check status and replies under “Track a ticket”.</p>
+        <div class="row" style="justify-content:center;margin-top:10px">
+          <button class="btn ghost" id="copyBtn" type="button">Copy ID</button>
+          <button class="btn" id="againBtn" type="button">Submit another</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="track" class="card" hidden>
+      <form id="t" class="row" style="align-items:flex-end">
+        <label style="flex:1;margin:0">Ticket ID
+          <input name="tid" placeholder="MT-0001" autocomplete="off">
+        </label>
+        <button class="btn" id="trackBtn">Check status</button>
+      </form>
+      <div id="tres"></div>
+    </section>
+
+    <p class="foot">Department head? <a href="#dashboard">Open the dashboard</a></p>
+  </main>
+</div>
+
+<!-- ======================= HEAD DASHBOARD ======================= -->
+<div id="dashView" hidden>
+  <header class="hero slim">
+    <div class="wrap wide row">
+      <div>
+        <div class="brand">Marketing Tycoons · Intern Voice</div>
+        <h1 style="font-size:26px">Head Dashboard</h1>
+      </div>
+      <div class="spacer"></div>
+      <div id="userbox" class="userbox" hidden>
+        <div><b id="meName"></b></div>
+        <div id="meDept"></div>
+        <div class="row" style="justify-content:flex-end;margin-top:6px">
+          <button class="btn ghost small" id="refreshBtn" type="button">Refresh</button>
+          <button class="btn ghost small" id="logoutBtn" type="button">Log out</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap wide">
+    <section id="loginView" class="card" style="max-width:420px;margin:0 auto">
+      <h2 style="margin-top:0">Sign in</h2>
+      <p class="meta" style="margin-top:-6px">Use your work email and the access code that was emailed to you.</p>
+      <form id="login">
+        <label>Email<input name="email" type="email" autocomplete="username"></label>
+        <label>Access code<input name="code" type="password" inputmode="numeric" autocomplete="current-password"></label>
+        <p id="loginErr" class="error" hidden></p>
+        <button class="btn" id="loginBtn" style="width:100%">Sign in</button>
+      </form>
+    </section>
+
+    <section id="appView" hidden>
+      <div class="stats">
+        <div class="stat"><div class="n" id="sOpen">0</div><div class="l">Open</div></div>
+        <div class="stat"><div class="n" id="sProg">0</div><div class="l">In progress</div></div>
+        <div class="stat"><div class="n" id="sDone">0</div><div class="l">Resolved</div></div>
+        <div class="stat alert"><div class="n" id="sHigh">0</div><div class="l">High severity, not resolved</div></div>
+      </div>
+      <div class="card">
+        <div class="filters">
+          <select id="fStatus"><option value="active">Open + In progress</option><option value="">All statuses</option>
+            <option>Open</option><option>In Progress</option><option>Resolved</option></select>
+          <select id="fSev"><option value="">All severities</option><option>High</option><option>Medium</option><option>Low</option></select>
+          <select id="fDept" hidden><option value="">All departments</option></select>
+          <select id="fSort"><option value="sev">Sort: severity first</option><option value="new">Sort: newest first</option><option value="old">Sort: oldest first</option></select>
+          <input id="fText" placeholder="Search ID, subject or text">
+        </div>
+        <div id="list"></div>
+      </div>
+    </section>
+    <p class="foot"><a href="#">Go to the intern form</a></p>
+  </main>
+</div>
+
+<div id="toast" class="toast" role="status" hidden></div>
+
+<script>
+{
+  const API = 'https://script.google.com/macros/s/AKfycbziL8jNFj_gbS1gIdHdQygZSHccSq35MHrd7AFm0O40RGREN8z2JtK8bX7CkeQry2WbeA/exec';
+
+  // Calls the Apps Script backend without sending Google cookies, so it works
+  // no matter how many Google accounts the browser is signed in to.
+  async function api(action, ...args) {
+    let res;
+    try {
+      res = await fetch(API, {
+        method: 'POST', credentials: 'omit', redirect: 'follow',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({ action: action, args: args })
+      });
+    } catch (e) {
+      throw new Error('Could not reach the server. Check your internet and try again.');
+    }
+    let out;
+    try { out = await res.json(); } catch (e) { throw new Error('The server sent an unexpected reply. Please try again.'); }
+    if (!out.ok) throw new Error(out.error || 'Something went wrong.');
+    return out.data;
+  }
+
+  const $ = s => document.querySelector(s);
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const msg = e => String((e && e.message) || e).replace(/^(Exception|Error):\s*/, '');
+  let toastTimer = null;
+  function toast(text) {
+    const el = $('#toast'); el.textContent = text; el.hidden = false;
+    clearTimeout(toastTimer); toastTimer = setTimeout(() => { el.hidden = true; }, 3500);
+  }
+  const pillClass = s => String(s || '').replace(/[^A-Za-z]/g, '-');
+
+  /* ---------------- routing ---------------- */
+  function route() {
+    const dash = location.hash === '#dashboard';
+    $('#internView').hidden = dash;
+    $('#dashView').hidden = !dash;
+    document.title = dash ? 'Head Dashboard · Marketing Tycoons' : 'Intern Voice · Marketing Tycoons';
+    if (!dash) showTab(location.hash === '#track' ? 'track' : 'submit');
+    window.scrollTo(0, 0);
+  }
+  window.addEventListener('hashchange', route);
+
+  /* ---------------- intern view ---------------- */
+  function showTab(name) {
+    document.querySelectorAll('.tab').forEach(x => x.classList.toggle('active', x.dataset.tab === name));
+    $('#submit').hidden = name !== 'submit';
+    $('#track').hidden = name !== 'track';
+  }
+  document.querySelectorAll('.tab').forEach(b => b.addEventListener('click', () => showTab(b.dataset.tab)));
+
+  $('#anon').addEventListener('change', function () {
+    $('#who').hidden = this.checked;
+    $('#anonHint').hidden = !this.checked;
+  });
+
+  $('#f').addEventListener('submit', async ev => {
+    ev.preventDefault();
+    const f = ev.target, err = $('#err'), btn = $('#sendBtn'), el = f.elements;
+    const sev = f.querySelector('input[name=severity]:checked');
+    const data = {
+      department: el['department'].value, category: el['category'].value, severity: sev ? sev.value : '',
+      subject: el['subject'].value, description: el['description'].value, anonymous: el['anonymous'].checked,
+      name: el['name'].value, email: el['email'].value
+    };
+    const problem = !data.department ? 'Please choose a department.' : !data.category ? 'Please choose a type.' :
+      !data.severity ? 'Please choose how serious it is.' : !data.subject.trim() ? 'Please add a subject.' :
+      data.description.trim().length < 10 ? 'Please describe it in a little more detail.' :
+      (!data.anonymous && !data.name.trim()) ? 'Please enter your name, or tick "Submit anonymously".' : '';
+    if (problem) { err.textContent = problem; err.hidden = false; return; }
+    err.hidden = true; btn.disabled = true; btn.textContent = 'Submitting…';
+    try {
+      const res = await api('submitTicket', data);
+      $('#doneId').textContent = res.id;
+      $('#doneMsg').textContent = 'Sent to the ' + data.department + ' head' +
+        (data.email && !data.anonymous ? '. A confirmation is on its way to your email.' : '.');
+      f.hidden = true; $('#done').hidden = false;
+      window.scrollTo(0, 0);
+    } catch (e) {
+      err.textContent = msg(e); err.hidden = false;
+    } finally {
+      btn.disabled = false; btn.textContent = 'Submit ticket';
+    }
+  });
+
+  $('#againBtn').addEventListener('click', () => {
+    const f = $('#f'); f.reset(); $('#who').hidden = false; $('#anonHint').hidden = true;
+    f.hidden = false; $('#done').hidden = true;
+  });
+  $('#copyBtn').addEventListener('click', function () {
+    const id = $('#doneId').textContent, b = this;
+    try { navigator.clipboard.writeText(id).then(() => { b.textContent = 'Copied'; }, () => { b.textContent = id; }); }
+    catch (e) { b.textContent = id; }
+  });
+
+  $('#t').addEventListener('submit', async ev => {
+    ev.preventDefault();
+    const id = ev.target.elements['tid'].value.trim(), out = $('#tres'), btn = $('#trackBtn');
+    if (!id) return;
+    btn.disabled = true; out.innerHTML = '<p class="meta" style="margin-top:14px">Checking…</p>';
+    try {
+      const t = await api('getTicketStatus', id);
+      if (!t) { out.innerHTML = '<p class="error" style="margin-top:14px">No ticket found with that ID.</p>'; return; }
+      out.innerHTML = '<div class="status-box">' +
+        '<div class="row"><b>' + esc(t.id) + '</b><span class="pill ' + pillClass(t.status) + '">' + esc(t.status) + '</span>' +
+        '<span class="pill ' + pillClass(t.severity) + '">' + esc(t.severity) + '</span><span class="pill dept">' + esc(t.department) + '</span></div>' +
+        '<h3>' + esc(t.subject) + '</h3>' +
+        '<p class="meta">' + esc(t.category) + ' · submitted ' + esc(t.submitted) + (t.updated ? ' · updated ' + esc(t.updated) : '') + '</p>' +
+        (t.reply ? '<b>Reply from the department head</b><div class="reply">' + esc(t.reply) + '</div>'
+                 : '<p class="meta">No reply yet. Check back soon.</p>') +
+        '</div>';
+    } catch (e) {
+      out.innerHTML = '<p class="error" style="margin-top:14px">' + esc(msg(e)) + '</p>';
+    } finally {
+      btn.disabled = false;
+    }
+  });
+
+  /* ---------------- head dashboard ---------------- */
+  let CRED = null, ME = null, TICKETS = [], OPEN_ID = null;
+  const SEV_RANK = { High: 0, Medium: 1, Low: 2 };
+
+  $('#login').addEventListener('submit', async ev => {
+    ev.preventDefault();
+    const email = ev.target.elements['email'].value.trim(), code = ev.target.elements['code'].value.trim();
+    const err = $('#loginErr'), btn = $('#loginBtn');
+    if (!email || !code) { err.textContent = 'Enter your email and access code.'; err.hidden = false; return; }
+    err.hidden = true; btn.disabled = true; btn.textContent = 'Signing in…';
+    try { await signIn(email, code); }
+    catch (e) { err.textContent = msg(e); err.hidden = false; }
+    finally { btn.disabled = false; btn.textContent = 'Sign in'; }
+  });
+
+  async function signIn(email, code) {
+    const me = await api('headLogin', email, code);
+    ME = me; CRED = { email: email, code: code };
+    try { sessionStorage.setItem('mt_cred', JSON.stringify(CRED)); } catch (e) {}
+    $('#meName').textContent = me.name;
+    $('#meDept').textContent = me.isAdmin ? me.title + ' · all departments' : me.title + ' · ' + me.department;
+    const sel = $('#fDept');
+    if (me.isAdmin) {
+      sel.innerHTML = '<option value="">All departments</option>' + me.departments.map(d => '<option>' + esc(d) + '</option>').join('');
+      sel.hidden = false;
+    } else { sel.hidden = true; sel.value = ''; }
+    $('#loginView').hidden = true; $('#appView').hidden = false; $('#userbox').hidden = false;
+    await load();
+  }
+
+  $('#logoutBtn').addEventListener('click', () => {
+    CRED = ME = null; TICKETS = [];
+    try { sessionStorage.removeItem('mt_cred'); } catch (e) {}
+    $('#login').reset();
+    $('#loginView').hidden = false; $('#appView').hidden = true; $('#userbox').hidden = true;
+  });
+  $('#refreshBtn').addEventListener('click', () => load());
+
+  async function load() {
+    $('#list').innerHTML = '<p class="empty">Loading tickets…</p>';
+    try { TICKETS = await api('getTickets', CRED.email, CRED.code); render(); }
+    catch (e) { $('#list').innerHTML = '<p class="error">' + esc(msg(e)) + '</p>'; }
+  }
+
+  ['#fStatus', '#fSev', '#fDept', '#fSort'].forEach(s => $(s).addEventListener('change', render));
+  $('#fText').addEventListener('input', render);
+
+  function render() {
+    const c = { Open: 0, 'In Progress': 0, Resolved: 0 }; let high = 0;
+    TICKETS.forEach(t => { c[t.status] = (c[t.status] || 0) + 1; if (t.severity === 'High' && t.status !== 'Resolved') high++; });
+    $('#sOpen').textContent = c.Open; $('#sProg').textContent = c['In Progress'];
+    $('#sDone').textContent = c.Resolved; $('#sHigh').textContent = high;
+
+    const st = $('#fStatus').value, sv = $('#fSev').value, dp = $('#fDept').value, q = $('#fText').value.trim().toLowerCase();
+    const sort = $('#fSort').value;
+    const rows = TICKETS.filter(t => {
+      if (st === 'active' && t.status === 'Resolved') return false;
+      if (st && st !== 'active' && t.status !== st) return false;
+      if (sv && t.severity !== sv) return false;
+      if (dp && t.department !== dp) return false;
+      if (q && (t.id + ' ' + t.subject + ' ' + t.description + ' ' + t.name).toLowerCase().indexOf(q) < 0) return false;
+      return true;
+    });
+    rows.sort((a, b) => {
+      if (sort === 'old') return a.submittedTs - b.submittedTs;
+      if (sort === 'sev' && SEV_RANK[a.severity] !== SEV_RANK[b.severity]) return SEV_RANK[a.severity] - SEV_RANK[b.severity];
+      return b.submittedTs - a.submittedTs;
+    });
+    if (!rows.length) {
+      $('#list').innerHTML = '<p class="empty">' + (TICKETS.length ? 'No tickets match these filters.' : 'No tickets yet. New ones will show up here.') + '</p>';
+      return;
+    }
+    $('#list').innerHTML = rows.map(card).join('');
+  }
+
+  function card(t) {
+    const open = t.id === OPEN_ID;
+    const statusOpts = ME.statuses.map(s => '<option' + (s === t.status ? ' selected' : '') + '>' + esc(s) + '</option>').join('');
+    const replyHint = (!t.anonymous && t.email) ? '(also emailed to them)' : '(shown when they track the ticket ID)';
+    return '<article class="tk ' + pillClass(t.severity) + '" data-id="' + esc(t.id) + '">' +
+      '<div class="tk-head">' +
+        '<span class="pill ' + pillClass(t.severity) + '">' + esc(t.severity) + '</span>' +
+        '<span class="tk-id">' + esc(t.id) + '</span>' +
+        '<span class="tk-sub">' + esc(t.subject) + '</span>' +
+        (ME.isAdmin ? '<span class="pill dept">' + esc(t.department) + '</span>' : '') +
+        '<span class="pill ' + pillClass(t.status) + '">' + esc(t.status) + '</span>' +
+        '<span class="meta">' + esc(t.submitted) + '</span>' +
+      '</div>' +
+      '<div class="tk-body"' + (open ? '' : ' hidden') + '>' +
+        '<div class="row meta"><span>' + esc(t.category) + '</span><span>·</span>' +
+          '<span>' + (t.anonymous ? '<b>Anonymous intern</b>' : 'From <b>' + esc(t.name) + '</b>' +
+            (t.email ? ' (' + esc(t.email) + ')' : '')) + '</span>' +
+          (t.updatedBy ? '<span>·</span><span>Last updated by ' + esc(t.updatedBy) + ', ' + esc(t.updated) + '</span>' : '') +
+        '</div>' +
+        '<div class="tk-desc">' + esc(t.description) + '</div>' +
+        '<div class="tk-form">' +
+          '<label>Status<select class="f-status">' + statusOpts + '</select></label>' +
+          '<label>Reply to intern <small>' + replyHint + '</small>' +
+            '<textarea class="f-reply" rows="3">' + esc(t.reply) + '</textarea></label>' +
+        '</div>' +
+        '<div class="row"><button class="btn small f-save" type="button">Save update</button><span class="f-msg"></span></div>' +
+      '</div>' +
+    '</article>';
+  }
+
+  $('#list').addEventListener('click', async ev => {
+    const art = ev.target.closest('.tk'); if (!art) return;
+    const id = art.dataset.id;
+    if (ev.target.closest('.tk-head')) {
+      const body = art.querySelector('.tk-body');
+      body.hidden = !body.hidden;
+      OPEN_ID = body.hidden ? null : id;
+      return;
+    }
+    if (ev.target.closest('.f-save')) {
+      const btn = art.querySelector('.f-save'), m = art.querySelector('.f-msg');
+      const status = art.querySelector('.f-status').value, reply = art.querySelector('.f-reply').value;
+      btn.disabled = true; btn.textContent = 'Saving…'; m.className = 'f-msg meta'; m.textContent = '';
+      try {
+        const t = await api('updateTicket', CRED.email, CRED.code, id, status, reply);
+        for (let i = 0; i < TICKETS.length; i++) if (TICKETS[i].id === t.id) { t.submittedTs = TICKETS[i].submittedTs; TICKETS[i] = t; }
+        OPEN_ID = id; render();
+        const stillShown = !!document.querySelector('.tk[data-id="' + CSS.escape(id) + '"]');
+        toast(id + ' saved as ' + t.status + (stillShown ? '' : '. Change the status filter to see it.') +
+          (!t.anonymous && t.email ? ' The intern has been emailed.' : ''));
+      } catch (e) {
+        btn.disabled = false; btn.textContent = 'Save update';
+        m.className = 'f-msg error'; m.textContent = msg(e);
+      }
+    }
+  });
+
+  /* ---------------- start ---------------- */
+  route();
+  let saved = null;
+  try { saved = JSON.parse(sessionStorage.getItem('mt_cred') || 'null'); } catch (e) {}
+  if (saved && saved.email && saved.code) {
+    signIn(saved.email, saved.code).catch(() => { try { sessionStorage.removeItem('mt_cred'); } catch (e) {} });
+  }
+}
+</script>
+</body>
+</html>
